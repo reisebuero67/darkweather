@@ -9,12 +9,22 @@
         body {
             margin: 0;
             padding: 0;
-            background: transparent; /* Wichtig: Die Seite an sich ist unsichtbar */
+            /* Der Trick: Wir "faken" den Notion Dark Mode Hintergrund als Standard */
+            background-color: #191919; 
             display: flex;
             align-items: center;
             justify-content: center; 
             height: 100vh;
             overflow: hidden;
+            /* Standard Schriftfarbe (obwohl die Pille eigene Farben hat) */
+            color: #ffffff; 
+        }
+
+        /* Automatische Anpassung an den Notion Light Mode */
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #FFFFFF; /* Notion Light Mode Hintergrund */
+            }
         }
 
         /* Die "Pille": Festes Dark-Design, das sich immer abhebt */
@@ -127,7 +137,7 @@
         // Auto-Refresh alle 30 Minuten (1.800.000 ms)
         setInterval(fetchWeather, 1800000);
 
-        // Smarter Refresh: Aktualisiert sofort, wenn der Tab (bzw. das Notion Widget) sichtbar wird
+        // Smarter Refresh: Aktualisiert sofort, wenn der Tab sichtbar wird
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 fetchWeather();
